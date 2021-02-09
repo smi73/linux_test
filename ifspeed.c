@@ -1,13 +1,41 @@
 //#include <linux/ethtool.h>
+#include <linux/types.h>
 #include <linux/sockios.h>
 #include <net/if.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/ioctl.h>
 
+/* This should work for both 32 and 64 bit userland. */
+struct ethtool_cmd {
+	__u32	cmd;
+	__u32	supported;	/* Features this interface supports */
+	__u32	advertising;	/* Features this interface advertises */
+	__u16	speed;		/* The forced speed, 10Mb, 100Mb, gigabit */
+	__u8	duplex;		/* Duplex, half or full */
+	__u8	port;		/* Which connector port */
+	__u8	phy_address;
+	__u8	transceiver;	/* Which transceiver to use */
+	__u8	autoneg;	/* Enable or disable autonegotiation */
+	__u32	maxtxpkt;	/* Tx pkts before generating tx int */
+	__u32	maxrxpkt;	/* Rx pkts before generating rx int */
+	__u16	speed_hi;
+	__u16	reserved2;
+	__u32	reserved[3];
+};
+
 #define ETHTOOL_GSET		0x00000001 /* DEPRECATED, Get settings.
 					    * Please use ETHTOOL_GLINKSETTINGS
 					    */
+
+/* Duplex, half or full. */
+#define DUPLEX_HALF		0x00
+#define DUPLEX_FULL		0x01
+
+static inline __u32 ethtool_cmd_speed(struct ethtool_cmd *ep)
+{
+	return (ep->speed_hi << 16) | ep->speed;
+}
 
 int main(int argc, char *argv[]) {
   if (argc != 2)
