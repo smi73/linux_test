@@ -1,9 +1,13 @@
-#include <linux/ethtool.h>
+//#include <linux/ethtool.h>
 #include <linux/sockios.h>
 #include <net/if.h>
 #include <stdio.h>
 #include <string.h>
 #include <sys/ioctl.h>
+
+#define ETHTOOL_GSET		0x00000001 /* DEPRECATED, Get settings.
+					    * Please use ETHTOOL_GLINKSETTINGS
+					    */
 
 int main(int argc, char *argv[]) {
   if (argc != 2)
