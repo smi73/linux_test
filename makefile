@@ -1,15 +1,7 @@
-CC      = gcc
-CFLAGS  = -g
-RM      = rm -f
+CC=gcc
+CFLAGS=-I.
+
+ifspeed: ifspeed.o
+	$(CC) -o ifspeed ifspeed.o
 
 
-default: all
-
-all: ifspeed
-
-ifspeed: ifspeed.c
-    $(CC) $(CFLAGS) -o ifspeed ifspeed.c
-
-clean veryclean:
-    $(RM) ifspeed
-    
