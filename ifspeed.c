@@ -38,6 +38,7 @@ static inline __u32 ethtool_cmd_speed(struct ethtool_cmd *ep)
 }
 
 int main(int argc, char *argv[]) {
+  printf("Testing...\n");
   if (argc != 2)
     return 1;
 
