@@ -27,6 +27,7 @@ struct ethtool_cmd {
 #define ETHTOOL_GSET		0x00000001 /* DEPRECATED, Get settings.
 					    * Please use ETHTOOL_GLINKSETTINGS
 					    */
+#define ETHTOOL_GLINKSETTINGS	0x0000004c /* Get ethtool_link_settings */
 
 /* Duplex, half or full. */
 #define DUPLEX_HALF		0x00
@@ -46,7 +47,7 @@ int main(int argc, char *argv[]) {
   if (s == -1)
     return 2;
 
-  struct ethtool_cmd cmd = {.cmd = ETHTOOL_GSET};
+  struct ethtool_cmd cmd = {.cmd = ETHTOOL_GLINKSETTINGS};
   struct ifreq req;
   strncpy(req.ifr_ifrn.ifrn_name, argv[1], IF_NAMESIZE);
   req.ifr_ifrn.ifrn_name[IF_NAMESIZE - 1] = 0;
